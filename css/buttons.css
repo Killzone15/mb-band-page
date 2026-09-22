@@ -1,0 +1,119 @@
+/* Контейнер для кнопок оплаты */
+.pay-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;              /* Отступ между кнопками */
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto 20px;    /* Отступ снизу от блока соцсетей */
+}
+
+/* Общие стили для кнопок оплаты */
+.ozon-pay-btn,
+.sber-pay-btn {
+  position: relative;          /* Чтобы иконку можно было позиционировать */
+  display: flex;
+  align-items: center;
+  justify-content: center;      /* Текст по центру */
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 48px;           /* Отступ справа, чтобы текст не заезжал под иконку */
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease, filter 0.2s ease;
+  text-decoration: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Цвета кнопок */
+.ozon-pay-btn {
+  background-color: #005bff;
+}
+
+.ozon-pay-btn:hover {
+  background-color: #0047cc;
+}
+
+.sber-pay-btn {
+  background: linear-gradient(135deg, #21A038 0%, #0FA8E0 100%);
+}
+
+.sber-pay-btn:hover {
+  filter: brightness(1.1);
+}
+
+/* Эффект нажатия */
+.ozon-pay-btn:active,
+.sber-pay-btn:active {
+  transform: scale(0.98);
+}
+
+/* Иконки внутри кнопок оплаты — прижаты вправо */
+.ozon-pay-btn svg,
+.sber-pay-btn svg {
+  position: absolute;
+  right: 16px;                  /* Отступ от правого края */
+  top: 50%;
+  transform: translateY(-50%);  /* Центрирование по вертикали */
+  flex-shrink: 0;
+   fill: #ffffff;
+}
+
+/* Размеры иконок */
+.ozon-pay-btn svg {
+  height: 28px;
+  width: auto;
+}
+
+.sber-pay-btn svg {
+  height: 24px;
+  width: 24px;
+}
+
+
+/* =========================================
+   Кнопка "Через Т-Банк"
+   ========================================= */
+
+.tbank-pay-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333333;              /* Тёмный текст, как на логотипе */
+  background-color: #FFDD2D;   /* Фирменный жёлтый Т-Банка */
+  border: none;
+  border-radius: 12px;
+  padding: 14px 48px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  text-decoration: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tbank-pay-btn:hover {
+  background-color: #FFD100;   /* Чуть темнее при наведении */
+}
+
+.tbank-pay-btn:active {
+  transform: scale(0.98);
+}
+
+/* Иконка Т-Банка — прижата вправо */
+.tbank-pay-btn svg {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;      /* было 24px — стало крупнее */
+  height: 36px;
+  flex-shrink: 0;
+}

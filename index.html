@@ -35,39 +35,124 @@
             font-size: 24px;
             font-weight: 700;
             color: #000;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             line-height: 1.2;
         }
 
-        /* Кнопки доната */
-        .donate-btn {
-            display: block;
+        /* =========================================
+           Подсказка над кнопками оплаты
+           ========================================= */
+        .pay-hint {
+            font-size: 13px;
+            font-weight: normal;
+            color: #666;
+            text-align: center;
+            line-height: 1.4;
+            margin: 0 auto 16px;
+            max-width: 280px;
+        }
+
+        /* =========================================
+           Контейнер для кнопок оплаты
+           ========================================= */
+        .pay-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             width: 100%;
-            max-width: 260px;
-            margin: 0 auto 15px;
-            padding: 14px 10px;
-            background: transparent;
-            border: 2px solid #000;
-            color: #000;
+            max-width: 320px;
+            margin: 0 auto 24px;
+        }
+
+        /* =========================================
+           Общие стили для кнопок оплаты
+           ========================================= */
+        .ozon-pay-btn,
+        .sber-pay-btn,
+        .tbank-pay-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 48px;
             font-size: 16px;
             font-weight: 600;
-            text-decoration: none;
+            font-family: Arial, sans-serif;
             cursor: pointer;
-            transition: background 0.2s, color 0.2s;
+            transition: background-color 0.2s ease, transform 0.1s ease, filter 0.2s ease;
+            text-decoration: none;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .donate-btn:hover {
-            background: #000;
-            color: #fff;
+        .ozon-pay-btn:active,
+        .sber-pay-btn:active,
+        .tbank-pay-btn:active {
+            transform: scale(0.98);
         }
 
+        /* Иконки внутри кнопок оплаты — прижаты вправо */
+        .ozon-pay-btn svg,
+        .sber-pay-btn svg,
+        .tbank-pay-btn svg {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            flex-shrink: 0;
+        }
+
+        /* Кнопка Ozon */
+        .ozon-pay-btn {
+            background-color: #005bff;
+            color: #ffffff;
+        }
+        .ozon-pay-btn:hover {
+            background-color: #3378ff;
+        }
+        .ozon-pay-btn svg {
+            height: 28px;
+            width: auto;
+        }
+
+        /* Кнопка Сбер */
+        .sber-pay-btn {
+            background: linear-gradient(135deg, #21A038 0%, #0FA8E0 100%);
+            color: #ffffff;
+        }
+        .sber-pay-btn:hover {
+            filter: brightness(1.1);
+        }
+        .sber-pay-btn svg {
+            height: 24px;
+            width: 24px;
+            fill: #ffffff;
+        }
+
+        /* Кнопка Т-Банк */
+        .tbank-pay-btn {
+            background-color: #FFDD2D;
+            color: #333333;
+        }
+        .tbank-pay-btn:hover {
+            background-color: #FFD100;
+        }
+        .tbank-pay-btn svg {
+            height: 36px;
+            width: 36px;
+        }
+
+        /* =========================================
+           Социальные сети
+           ========================================= */
         .social-title {
             font-size: 16px;
             color: #333;
             margin: 25px 0 15px;
         }
 
-        /* Кнопки соцсетей */
         .social-btn {
             display: flex;
             align-items: center;
@@ -106,27 +191,42 @@
             font-weight: 300;
         }
 
-        /* Цвета соцсетей */
         .telegram {
             background-color: #2AABEE;
         }
 
         .max {
-            background-color: #4DC3F7; /* Примерный цвет для MAX */
+            background-color: #4DC3F7;
         }
 
         .vk {
             background-color: #0077FF;
         }
 
-        /* Стили для кнопки копирования телефона (если нужна) */
-        .phone-copy {
-            display: inline-block;
-            margin-top: 20px;
-            color: #0077FF;
-            text-decoration: underline;
-            cursor: pointer;
+        /* =========================================
+           Всплывающее уведомление
+           ========================================= */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background-color: #333;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
             font-size: 14px;
+            font-family: Arial, sans-serif;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
@@ -135,28 +235,53 @@
     <div class="container">
         <h1>Поддержать группу<br>MB BAND</h1>
 
-        <!-- Кнопки доната -->
-        <a href="#" class="donate-btn">Через Т БАНК</a>
-        <a href="#" class="donate-btn">Через Сбербанк</a>
+        <p class="pay-hint">Выберите банк, чтобы скопировать номер телефона</p>
+
+        <div class="pay-buttons">
+
+            <!-- Через Озон банк -->
+            <button type="button" class="ozon-pay-btn" onclick="copyPhone('+79161050632')">
+                Через Озон банк
+                <svg id="Icon/Bank/OzonBank" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M278.02 348.657C278.02 408.327 233.815 449.496 173.51 449.496C113.179 449.496 69 408.327 69 348.657C69 288.987 113.206 247.818 173.51 247.818C233.842 247.818 278.02 288.987 278.02 348.657ZM685.329 348.657C685.329 408.327 641.124 449.496 580.819 449.496C520.514 449.496 476.309 408.327 476.309 348.657C476.309 288.987 520.514 247.818 580.819 247.818C641.124 247.818 685.329 288.987 685.329 348.657ZM897.963 326.573V442.94H847.195V337.323C847.195 306.904 832.85 294.349 808.383 294.349C782.693 294.349 764.177 308.656 764.177 349.851V442.94H713.409V253.764H763.592V282.404H764.788C777.327 260.931 798.845 247.792 826.315 247.792C867.491 247.818 897.963 270.486 897.963 326.573ZM296.536 253.764V296.737H396.266L294.145 402.354V442.94H463.77V399.966H356.868L458.987 293.739V253.764H296.536ZM122.158 348.657C122.158 381.465 142.455 402.965 173.51 402.965C204.565 402.965 224.862 381.492 224.862 348.657C224.862 315.822 204.565 294.349 173.51 294.349C142.455 294.349 122.158 315.822 122.158 348.657ZM529.467 348.657C529.467 381.465 549.764 402.965 580.819 402.965C611.874 402.965 632.17 381.492 632.17 348.657C632.17 315.822 611.874 294.349 580.819 294.349C549.764 294.349 529.467 315.822 529.467 348.657Z" fill="white"/>
+                    <path d="M712.05 561.039V744.214H662.891V670.245H584.231V744.214H535.072V561.039H584.231V627.477H662.891V561.039H712.05ZM444.296 561.039V587.615H443.147C434.478 569.135 411.326 555.256 381.849 555.256C333.85 555.256 294.514 589.928 294.514 652.331C294.514 715.326 332.689 750.562 381.849 750.562C411.917 750.562 433.317 736.683 443.147 719.36H444.296V744.214H493.455V561.039H444.296ZM184.085 559.317C154.015 559.317 130.89 573.196 118.749 595.145H117.59C119.314 554.691 133.205 537.368 180.613 532.742L254.052 525.802V479L172.51 485.348C92.7162 491.697 69 546.029 69 632.694C69 709.543 113.527 750.562 171.352 750.562C228.611 750.562 272.547 709.543 272.547 652.331C272.547 595.145 232.65 559.317 184.085 559.317ZM394.579 706.073C365.068 706.073 346.011 684.123 346.011 653.488C346.011 622.286 365.102 599.746 394.579 599.746C424.057 599.746 444.296 621.694 444.296 652.896C444.296 683.532 424.057 706.073 394.579 706.073ZM170.76 706.073C142.44 706.073 120.446 684.689 120.446 652.922C120.446 620.563 142.414 601.493 170.76 601.493C199.108 601.493 221.075 620.563 221.075 652.922C221.075 684.689 199.108 706.073 170.76 706.073ZM869.346 744.214L802.86 656.391V744.214H753.701V561.039H802.86V636.73L864.159 561.039H924.888L849.699 644.235L931.805 744.187H869.346V744.214Z" fill="white"/>
+                </svg>
+            </button>
+
+            <!-- Через Сбербанк -->
+            <a href="https://messenger.sbrf.ru/sl/C0bXEiyh2lusUhCe8" class="sber-pay-btn" target="_blank" rel="noopener">
+                Через Сбербанк
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.41 14.59L6.59 12.59 8 11.17l2.59 2.59L17 7.34l1.41 1.41-7.82 7.84z"/>
+                </svg>
+            </a>
+
+            <!-- Через Т-Банк -->
+            <button type="button" class="tbank-pay-btn" onclick="copyPhone('+79161050632')">
+                Через Т-Банк
+                <svg id="Icon/Bank/TBank" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13.3 15.3999H42.7001V30.189C42.7001 33.978 40.6771 37.484 37.3965 39.3758L28 44.7999L18.6035 39.3758C15.3229 37.4787 13.3 33.978 13.3 30.189V15.3999Z" fill="white"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21.3706 23.1826V27.7839C21.9995 27.0711 23.1419 26.5942 24.4521 26.5942H25.8723V31.9397C25.8723 33.3599 25.4845 34.6072 24.9133 35.2937H31.092C30.5208 34.6072 30.1329 33.3651 30.1329 31.9449V26.5942H31.5532C32.8581 26.5942 34.0058 27.0764 34.6347 27.7839V23.1826H21.3706Z" fill="#333333"/>
+                </svg>
+            </button>
+
+        </div>
 
         <p class="social-title">Наши социальные сети</p>
 
-        <!-- Соцсети -->
         <!-- Telegram -->
         <a href="https://t.me/mbbandmusic" target="_blank" class="social-btn telegram">
             <div class="icon">
-                <!-- Иконка Telegram -->
                 <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
             </div>
             <span>MB BAND | Telegram</span>
             <span class="arrow">›</span>
         </a>
 
-        <!-- MAX (Мессенджер) -->
+        <!-- MAX -->
         <a href="https://max.ru/channel_Mbbandmusic" target="_blank" class="social-btn max">
             <div class="icon">
-                <!-- Иконка MAX (примерная) -->
-                <img src="icons/MAX.svg" alt="VK" width="28" height="28">
+                <img src="icons/MAX.svg" alt="MAX" width="28" height="28">
             </div>
             <span>MB BAND | MAX</span>
             <span class="arrow">›</span>
@@ -164,24 +289,26 @@
 
         <!-- VK -->
         <a href="https://vk.ru/mbbandmusic" target="_blank" class="social-btn vk">
-    <div class="icon">
-        <img src="icons/vk.svg" alt="VK" width="28" height="28">
+            <div class="icon">
+                <img src="icons/vk.svg" alt="VK" width="28" height="28">
+            </div>
+            <span>Сообщество MB BAND</span>
+            <span class="arrow">›</span>
+        </a>
     </div>
-    <span>Сообщество MB BAND</span>
-    <span class="arrow">›</span>
-</a>
 
-        <!-- Пример кнопки копирования телефона (если нужно) -->
-        <!-- <div class="phone-copy" onclick="copyPhone()">+7 (999) 123-45-67</div> -->
-    </div>
+    <!-- Всплывающее уведомление -->
+    <div id="toast" class="toast">Номер скопирован</div>
 
     <script>
-        // Функция для копирования телефона (если раскомментируете блок выше)
-        function copyPhone() {
-            const phone = '+79991234567';
-            navigator.clipboard.writeText(phone).then(() => {
-                alert('Номер скопирован!');
-            }).catch(err => {
+        function copyPhone(phone) {
+            navigator.clipboard.writeText(phone).then(function () {
+                var toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(function () {
+                    toast.classList.remove('show');
+                }, 2000);
+            }).catch(function (err) {
                 console.error('Ошибка копирования: ', err);
             });
         }
