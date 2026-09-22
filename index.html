@@ -240,7 +240,7 @@
         <div class="pay-buttons">
 
             <!-- Через Озон банк -->
-            <button type="button" class="ozon-pay-btn" onclick="copyPhone('+79161050632')">
+            <button type="button" class="ozon-pay-btn" onclick="copyPhone('+79998426723')">
                 Через Озон банк
                 <svg id="Icon/Bank/OzonBank" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M278.02 348.657C278.02 408.327 233.815 449.496 173.51 449.496C113.179 449.496 69 408.327 69 348.657C69 288.987 113.206 247.818 173.51 247.818C233.842 247.818 278.02 288.987 278.02 348.657ZM685.329 348.657C685.329 408.327 641.124 449.496 580.819 449.496C520.514 449.496 476.309 408.327 476.309 348.657C476.309 288.987 520.514 247.818 580.819 247.818C641.124 247.818 685.329 288.987 685.329 348.657ZM897.963 326.573V442.94H847.195V337.323C847.195 306.904 832.85 294.349 808.383 294.349C782.693 294.349 764.177 308.656 764.177 349.851V442.94H713.409V253.764H763.592V282.404H764.788C777.327 260.931 798.845 247.792 826.315 247.792C867.491 247.818 897.963 270.486 897.963 326.573ZM296.536 253.764V296.737H396.266L294.145 402.354V442.94H463.77V399.966H356.868L458.987 293.739V253.764H296.536ZM122.158 348.657C122.158 381.465 142.455 402.965 173.51 402.965C204.565 402.965 224.862 381.492 224.862 348.657C224.862 315.822 204.565 294.349 173.51 294.349C142.455 294.349 122.158 315.822 122.158 348.657ZM529.467 348.657C529.467 381.465 549.764 402.965 580.819 402.965C611.874 402.965 632.17 381.492 632.17 348.657C632.17 315.822 611.874 294.349 580.819 294.349C549.764 294.349 529.467 315.822 529.467 348.657Z" fill="white"/>
@@ -300,19 +300,66 @@
     <!-- Всплывающее уведомление -->
     <div id="toast" class="toast">Номер скопирован</div>
 
-    <script>
-        function copyPhone(phone) {
+<script>
+    function copyPhone(phone) {
+        // 1. Пытаемся использовать современный метод (сработает в большинстве десктопных и новых мобильных браузеров)
+        if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(phone).then(function () {
-                var toast = document.getElementById('toast');
-                toast.classList.add('show');
-                setTimeout(function () {
-                    toast.classList.remove('show');
-                }, 2000);
-            }).catch(function (err) {
-                console.error('Ошибка копирования: ', err);
+                showToast();
+            }).catch(function () {
+                // Если современный метод не сработал, используем резервный
+                fallbackCopyText(phone);
             });
+        } else {
+            // 2. Если API недоступен (старый браузер или небезопасный контекст), сразу используем резервный
+            fallbackCopyText(phone);
         }
-    </script>
+    }
+
+    // Резервный метод копирования
+    function fallbackCopyText(text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+        
+        // Делаем элемент невидимым, но доступным для взаимодействия
+        textArea.style.position = "fixed";
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.width = "2em";
+        textArea.style.height = "2em";
+        textArea.style.padding = "0";
+        textArea.style.border = "none";
+        textArea.style.outline = "none";
+        textArea.style.boxShadow = "none";
+        textArea.style.background = "transparent";
+        
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            var successful = document.execCommand('copy');
+            if (successful) {
+                showToast();
+            } else {
+                console.error('Резервное копирование не удалось');
+            }
+        } catch (err) {
+            console.error('Ошибка при копировании: ', err);
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    // Функция для показа уведомления
+    function showToast() {
+        var toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(function () {
+            toast.classList.remove('show');
+        }, 2000);
+    }
+</script>
 
 </body>
 </html>
