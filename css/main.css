@@ -1,0 +1,223 @@
+* {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 30px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        /* =========================================
+           Подсказка над кнопками оплаты
+           ========================================= */
+        .pay-hint {
+            font-size: 13px;
+            font-weight: normal;
+            color: #666;
+            text-align: center;
+            line-height: 1.4;
+            margin: 0 auto 16px;
+            max-width: 280px;
+        }
+
+        /* =========================================
+           Контейнер для кнопок оплаты
+           ========================================= */
+        .pay-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto 24px;
+        }
+
+        /* =========================================
+           Общие стили для кнопок оплаты
+           ========================================= */
+        .ozon-pay-btn,
+        .sber-pay-btn,
+        .tbank-pay-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 48px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease, filter 0.2s ease;
+            text-decoration: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .ozon-pay-btn:active,
+        .sber-pay-btn:active,
+        .tbank-pay-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Иконки внутри кнопок оплаты — прижаты вправо */
+        .ozon-pay-btn svg,
+        .sber-pay-btn svg,
+        .tbank-pay-btn svg {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            flex-shrink: 0;
+        }
+
+        /* Кнопка Ozon */
+        .ozon-pay-btn {
+            background-color: #005bff;
+            color: #ffffff;
+        }
+        .ozon-pay-btn:hover {
+            background-color: #3378ff;
+        }
+        .ozon-pay-btn svg {
+            height: 28px;
+            width: auto;
+        }
+
+        /* Кнопка Сбер */
+        .sber-pay-btn {
+            background: linear-gradient(135deg, #21A038 0%, #0FA8E0 100%);
+            color: #ffffff;
+        }
+        .sber-pay-btn:hover {
+            filter: brightness(1.1);
+        }
+        .sber-pay-btn svg {
+            height: 24px;
+            width: 24px;
+            fill: #ffffff;
+        }
+
+        /* Кнопка Т-Банк */
+        .tbank-pay-btn {
+            background-color: #FFDD2D;
+            color: #333333;
+        }
+        .tbank-pay-btn:hover {
+            background-color: #FFD100;
+        }
+        .tbank-pay-btn svg {
+            height: 36px;
+            width: 36px;
+        }
+
+        /* =========================================
+           Социальные сети
+           ========================================= */
+        .social-title {
+            font-size: 16px;
+            color: #333;
+            margin: 25px 0 15px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .social-btn:hover {
+            opacity: 0.9;
+        }
+
+        .social-btn .icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn .icon svg {
+            width: 100%;
+            height: 100%;
+            fill: #fff;
+        }
+
+        .social-btn .arrow {
+            font-size: 20px;
+            font-weight: 300;
+        }
+
+        .telegram {
+            background-color: #2AABEE;
+        }
+
+        .max {
+            background-color: #4DC3F7;
+        }
+
+        .vk {
+            background-color: #0077FF;
+        }
+
+        /* =========================================
+           Всплывающее уведомление
+           ========================================= */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background-color: #333;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }

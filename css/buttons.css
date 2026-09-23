@@ -84,13 +84,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #333333;              /* Тёмный текст, как на логотипе */
-  background-color: #FFDD2D;   /* Фирменный жёлтый Т-Банка */
+  color: #333333;
+  background-color: #FFDD2D;
   border: none;
   border-radius: 12px;
-  padding: 14px 48px;
-  font-size: 16px;
-  font-weight: 600;
+  padding: 14px 60px;          /* было 48px — увеличили, чтобы текст не заезжал под иконку 36px */
+  font-size: 20px;             /* было 16px */
+  font-weight: 700;            /* было 600 — жирнее, чтобы держало баланс с иконкой */
+  letter-spacing: 0.3px;       /* лёгкий трекинг для читаемости цифр */
   font-family: Arial, sans-serif;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease;
@@ -99,21 +100,28 @@
   box-sizing: border-box;
 }
 
-.tbank-pay-btn:hover {
-  background-color: #FFD100;   /* Чуть темнее при наведении */
-}
+.tbank-pay-btn:hover  { background-color: #FFD100; }
+.tbank-pay-btn:active { transform: scale(0.98); }
 
-.tbank-pay-btn:active {
-  transform: scale(0.98);
-}
-
-/* Иконка Т-Банка — прижата вправо */
-.tbank-pay-btn svg {
+.tbank-pay-btn svg,
+.tbank-pay-btn .btn-icon {
   position: absolute;
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  width: 36px;      /* было 24px — стало крупнее */
+  width: 36px;
   height: 36px;
   flex-shrink: 0;
 }
+
+.pay-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    line-height: 1.35;
+}
+
+
